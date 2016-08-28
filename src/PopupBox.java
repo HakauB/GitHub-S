@@ -17,12 +17,12 @@ public class PopupBox extends Application {
 	private static String title = "";
 	private static String message = "";
 	
-	public void setTitle(String title)
+	public static void setTitle(String title)
 	{
 		title = title;
 	}
 	
-	public void setMessage(String message)
+	public static void setMessage(String message)
 	{
 		message = message;
 	}

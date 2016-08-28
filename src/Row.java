@@ -1,3 +1,5 @@
+import java.util.List;
+
 import org.eclipse.jgit.api.Git;
 
 public class Row {
@@ -7,17 +9,19 @@ public class Row {
 	private String current_version;
 	private String latest_version;
 	private String last_pulled;
+	private List<String> branches;
 	private String description;
 	private Git g;
 
 	public Row(String _enabled, String _repositories, String _current_version,
-			String _latest_version, String _last_pulled, String _description,
-			Git g) {
+			String _latest_version, String _last_pulled, List<String> branches,
+			String _description, Git g) {
 		this.enabled = _enabled;
 		this.repositories = _repositories;
 		this.current_version = _current_version;
 		this.latest_version = _latest_version;
 		this.last_pulled = _last_pulled;
+		this.branches = branches;
 		this.description = _description;
 		this.g = g;
 	}

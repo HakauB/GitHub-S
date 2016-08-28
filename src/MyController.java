@@ -1,7 +1,9 @@
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.eclipse.jgit.api.Git;
@@ -9,6 +11,7 @@ import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -18,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +36,7 @@ public class MyController implements Initializable
 	@FXML TableColumn<Row, String> current_version;
 	@FXML TableColumn<Row, String> latest_version;
 	@FXML TableColumn<Row, String> last_pulled;
+	@FXML TableColumn<Row, String> branches;
 	@FXML TableColumn<Row, String> description;
 	
 	private static FileWalker w;
@@ -53,7 +58,15 @@ public class MyController implements Initializable
 				System.out.println(g.getRepository().getRepositoryState().toString());
 				Config conf = g.getRepository().getConfig();
 				String url = conf.getString("remote", "origin", "url");
-				observableList.add(new Row(g.getRepository().getRepositoryState().toString(), g.getRepository().getDirectory().getAbsolutePath(), "v1.0", "v1.3", "5:00pm", url, g));
+				List<Ref> branchesList = BranchHandler.getBranches(g);
+				List<String> branchNames = new ArrayList<String>();
+				
+				for(Ref r : branchesList)
+				{
+					branchNames.add(r.getName());
+				}
+				
+				observableList.add(new Row(g.getRepository().getRepositoryState().toString(), g.getRepository().getDirectory().getAbsolutePath(), "v1.0", "v1.3", "5:00pm", branchNames, url, g));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -79,7 +92,6 @@ public class MyController implements Initializable
 		        new PropertyValueFactory<Row,String>("last_pulled"));
 		description.setCellValueFactory(
 		        new PropertyValueFactory<Row,String>("description"));
-
 		
 		data_table.setItems(observableList);
 		System.out.println("IT WORKED!!");

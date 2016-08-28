@@ -94,6 +94,7 @@
                   <TableColumn fx:id="current_version" maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Current Version" />
                   <TableColumn fx:id="latest_version" maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Latest Version" />
                   <TableColumn fx:id="last_pulled" maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Last Pulled" />
+                  <TableColumn fx:id="branches" maxWidth="300.0" minWidth = "50.0" prefWidth="150.0" text="Branches" />
                   <TableColumn fx:id="description" maxWidth="1500.0" minWidth="50.0" prefWidth="700.0" text="Description" />
               </columns>
             </TableView>
