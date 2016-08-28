@@ -51,13 +51,7 @@ public class Shepherd extends Application {
         stage.setScene(scene);
         stage.show();
         
-    }
-       
-    
-    public static void listRepos()
-    {
-    	FileWalker walker = new FileWalker();
-    	walker
-		.searchDirectory(new File("C:/Users/Ben Templeton/Documents"), ".git");
+        GitRepoBuilder.init();
+        
     }
 }

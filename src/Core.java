@@ -1,3 +1,7 @@
+import java.io.File;
+import java.util.ArrayList;
+
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
@@ -17,11 +21,13 @@ public class Core {
 	/** The search root. */
 	// The main directory the program will operate on.
 	private static String searchRoot = "C:/Users/Hakau/Documents/comp314";
+	
+	private static ArrayList<Git> repos;
 
 	/** The credential provider. */
 	// Credentials used to access Github
 	private static CredentialsProvider cp = new UsernamePasswordCredentialsProvider(
-			"", "");
+			"HakauB", "Moheofo1");
 
 	/**
 	 * Gets the search root.
@@ -39,5 +45,10 @@ public class Core {
 	 */
 	public static CredentialsProvider getCreds() {
 		return cp;
+	}
+	
+	public static ArrayList<Git> getRepos()
+	{
+		return repos;
 	}
 }

@@ -125,7 +125,7 @@ class PullThread extends Thread {
 	public void run() {
 		try {
 			g.pull().setCredentialsProvider(Core.getCreds()).call();
-
+			CommitHandler.printDifferencesToLast(g);
 		} catch (TransportException e) {
 			System.out.println("Not allowed access to repository");
 		} catch (Exception e) {

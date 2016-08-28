@@ -1,6 +1,14 @@
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.errors.NoWorkTreeException;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -26,22 +34,39 @@ public class MyController implements Initializable
 	@FXML TableColumn<Row, String> last_pulled;
 	@FXML TableColumn<Row, String> description;
 	
+	private static FileWalker w;
+	
 	private final ObservableList<String> repoList = FXCollections.observableArrayList(
     		new String("A"),
     		new String("B"),
     		new String("C")
     		); 
 	 
-		ObservableList<Row> observableList = FXCollections.observableArrayList(          
-				new Row("yes", "Test Repo","4.1","5.0", "5:00pm 10/10/2016", "This is a sample description"),
-				new Row("yes", "Test Repo","4.1","5.0", "5:00pm 10/10/2016", "This is a sample description"),
-				new Row("yes", "Test Repo","4.1","5.0", "5:00pm 10/10/2016", "This is a sample description")
-	           );
-		
+	ObservableList<Row> observableList = FXCollections.observableArrayList();
+	
+	//ObservableList<Row> observableList = 
+	public void buildList()
+	{
+		for(Git g : GitRepoBuilder.getrepositoryGits())
+		{
+			try {
+				System.out.println(g.getRepository().getRepositoryState().toString());
+				Config conf = g.getRepository().getConfig();
+				String url = conf.getString("remote", "origin", "url");
+				observableList.add(new Row(g.getRepository().getRepositoryState().toString(), g.getRepository().getDirectory().getAbsolutePath(), "v1.0", "v1.3", "5:00pm", url, g));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+	}
 		            	
 	@FXML 
 	private void listRepos()
 	{
+		observableList.clear();
+		buildList();
+		
 		enabled.setCellValueFactory(
 		        new PropertyValueFactory<Row,String>("enabled"));
 		repositories.setCellValueFactory(
@@ -58,6 +83,21 @@ public class MyController implements Initializable
 		
 		data_table.setItems(observableList);
 		System.out.println("IT WORKED!!");
+	}
+	
+	@FXML
+	private void pullAllRepos()
+	{
+		Puller p = new Puller();
+		p.pullAll();
+	}
+	
+	@FXML
+	private void pullSingleRepo()
+	{
+		Row temp = data_table.getSelectionModel().getSelectedItem();
+		if(temp == null) return;
+		Puller.pullSingle(temp.getGit());
 	}
 	
 	@Override
