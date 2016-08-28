@@ -1,7 +1,7 @@
 import org.eclipse.jgit.api.Git;
 
 public class Row {
-	
+
 	private String enabled;
 	private String repositories;
 	private String current_version;
@@ -10,22 +10,22 @@ public class Row {
 	private String description;
 	private Git g;
 
-	public Row(String _enabled, String _repositories, String _current_version, String _latest_version, String _last_pulled, String _description, Git g){
-		this.setEnabled(new String(_enabled));
-		this.setRepositories(new String(_repositories));
-		this.setCurrent_version(new String(_current_version));
-		this.setLatest_version(new String(_latest_version));
-		this.setLast_pulled(new String(_last_pulled));
-		//this.setDescription(new String(_description));
+	public Row(String _enabled, String _repositories, String _current_version,
+			String _latest_version, String _last_pulled, String _description,
+			Git g) {
+		this.enabled = _enabled;
+		this.repositories = _repositories;
+		this.current_version = _current_version;
+		this.latest_version = _latest_version;
+		this.last_pulled = _last_pulled;
 		this.description = _description;
 		this.g = g;
 	}
 
-	public Git getGit()
-	{
+	public Git getGit() {
 		return g;
 	}
-	
+
 	public String getEnabled() {
 		return enabled;
 	}

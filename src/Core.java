@@ -20,7 +20,7 @@ public class Core {
 
 	/** The search root. */
 	// The main directory the program will operate on.
-	private static String searchRoot = "C:/Users/Hakau/Documents/comp314";
+	private static String searchRoot = "/home/hvvdb1/comp314";
 	
 	private static ArrayList<Git> repos;
 
